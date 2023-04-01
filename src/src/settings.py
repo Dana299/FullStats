@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'dj_rest_auth.registration',
+    'django_celery_beat',
 ]
 
 SITE_ID = 1
@@ -149,8 +150,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
 
     'DEFAULT_RENDERER_CLASSES': (
-        'drf_camel_case.render.CamelCaseJSONRenderer',
-        'drf_camel_case.render.CamelCaseBrowsableAPIRenderer',
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+        'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
     ),
 
     'JSON_UNDERSCOREIZE': {
@@ -185,3 +186,7 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = "login"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = None
+
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672//'
