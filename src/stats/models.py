@@ -20,6 +20,9 @@ class ProductTracking(models.Model):
     start_tracking_date = models.DateTimeField()
     end_tracking_date = models.DateTimeField()
 
+    def __str__(self) -> str:
+        return f"Tracking product {self.product_id} for user {self.user}"
+
 
 class ProductHistory(models.Model):
     """ Model for product info. """
@@ -31,3 +34,6 @@ class ProductHistory(models.Model):
     brand = models.CharField(max_length=120)
     supplier = models.CharField(max_length=120)
     last_updated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"Product {self.product.product_id}"
