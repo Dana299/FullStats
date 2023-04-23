@@ -92,12 +92,12 @@ class ProductPageParser:
         return price_in_pennies
 
     def _get_product_price(self, soup: BeautifulSoup) -> int:
-        price = soup.find(class_="price-block__final-price")
-        return self._get_price_from_str(price.text)
-
-    def _get_product_discount_price(self, soup: BeautifulSoup) -> int:
         discount_price_str = soup.find(class_="price-block__old-price")
         return self._get_price_from_str(discount_price_str.text)
+
+    def _get_product_discount_price(self, soup: BeautifulSoup) -> int:
+        price = soup.find(class_="price-block__final-price")
+        return self._get_price_from_str(price.text)
 
     def _get_product_supplier(self, soup: BeautifulSoup) -> str:
         supplier = soup.find(class_="tooltip-supplier") \
