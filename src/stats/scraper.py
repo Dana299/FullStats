@@ -1,3 +1,4 @@
+import re
 from typing import TypedDict
 
 from bs4 import BeautifulSoup
@@ -71,16 +72,17 @@ class ProductPageParser:
             return source_html
 
     def _get_product_brandname(self, soup: BeautifulSoup) -> str:
-        brand_name = soup.find(attrs={
-            "data-link": ("text{:product^brandName}href{:product^brandUrl}"\
-                          "class{merge:!product^brandName toggle='hide'}")
-        })
+        product_page_header = soup.find(class_="product-page__header")
+        brand_name = product_page_header.find(
+            attrs={"data-link": re.compile(r'.*brandName.*')}
+        )
         return brand_name.text
 
     def _get_product_name(self, soup: BeautifulSoup) -> str:
-        product_name = soup.find(attrs={
-            "data-link": "text{:selectedNomenclature^goodsName || product^goodsName}"
-        })
+        product_page_header = soup.find(class_="product-page__header")
+        product_name = product_page_header.find(
+            attrs={"data-link": re.compile(r'.*goodsName.*')}
+        )
         return product_name.text
 
     def _get_price_from_str(self, str_: str) -> int:
